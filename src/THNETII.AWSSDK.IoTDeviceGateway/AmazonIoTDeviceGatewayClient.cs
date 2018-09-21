@@ -181,5 +181,26 @@ namespace Amazon.IoTDeviceGateway
         protected override AbstractAWSSigner CreateSigner() => CreateAWS4Signer();
 
         #endregion
+
+        #region CreateMqttWebSocketUri
+
+        public virtual async Task CreateMqttWebSocketUriAsync(CreateMqttWebSocketUriRequest request, CancellationToken cancelToken = default)
+        {
+            var credsTask = Credentials.GetCredentialsAsync();
+            var marshaller = CreateMqttWebSocketUriRequestMarshaller.Instance;
+            var iRequest = marshaller.Marshall(request);
+            var signer = CreateAWS4Signer();
+            cancelToken.ThrowIfCancellationRequested();
+            var creds = await credsTask.ConfigureAwait(continueOnCapturedContext: false);
+            cancelToken.ThrowIfCancellationRequested();
+            var signResult = signer.SignRequest(iRequest,
+                Config, new RequestMetrics(),
+                creds.AccessKey, creds.SecretKey
+                );
+            cancelToken.ThrowIfCancellationRequested();
+
+        }
+
+        #endregion
     }
 }
