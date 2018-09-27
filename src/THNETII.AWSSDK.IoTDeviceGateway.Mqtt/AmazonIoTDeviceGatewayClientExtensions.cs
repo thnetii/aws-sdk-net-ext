@@ -1,5 +1,7 @@
-﻿using MQTTnet.Client;
+﻿using Amazon.Util;
+using MQTTnet.Client;
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -22,7 +24,8 @@ namespace Amazon.IoTDeviceGateway
 
             if (options.ChannelOptions is MqttClientWebSocketOptions webSocketOptions)
             {
-                webSocketOptions.RequestHeaders = uriDetails.Headers;
+                webSocketOptions.RequestHeaders = new Dictionary<string, string>(uriDetails.SigningDetails.SignedHeaders, StringComparer.OrdinalIgnoreCase);
+                webSocketOptions.RequestHeaders[HeaderKeys.AuthorizationHeader] = uriDetails.SigningDetails.AuthorizationHeader;
             }
 
             return options;
