@@ -1,8 +1,10 @@
 ﻿using Amazon.IoTDeviceGateway.Model;
 using Amazon.IoTDeviceGateway.Model.Internal.MarshallTransformations;
+using Amazon.IoTDeviceGateway.Runtime.Internal;
 using Amazon.Runtime;
+using Amazon.Runtime.Internal;
 using Amazon.Runtime.Internal.Auth;
-using Amazon.Runtime.Internal.Util;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -13,7 +15,6 @@ namespace Amazon.IoTDeviceGateway
     /// </summary>
     public class AmazonIoTDeviceGatewayClient : AmazonServiceClient, IAmazonIoTDeviceGateway
     {
-
         #region Constructors
 
         /// <summary>
@@ -180,25 +181,36 @@ namespace Amazon.IoTDeviceGateway
         /// <inheritdoc />
         protected override AbstractAWSSigner CreateSigner() => CreateAWS4Signer();
 
+        /// <inheritdoc />
+        protected override void CustomizeRuntimePipeline(RuntimePipeline pipeline)
+        {
+            base.CustomizeRuntimePipeline(pipeline);
+
+            var signatureResponder = new SignatureResponder();
+
+            pipeline.AddHandlerBefore<Unmarshaller>(signatureResponder);
+
+            for (var innerHandler = signatureResponder.InnerHandler; !(innerHandler is null); innerHandler = innerHandler.InnerHandler)
+            {
+                (innerHandler as IDisposable)?.Dispose();
+            }
+            signatureResponder.InnerHandler = null;
+
+#if DEBUG
+            pipeline.AddHandler(new DebuggerHandler());
+#endif
+        }
+
         #endregion
 
         #region CreateMqttWebSocketUri
 
-        public virtual async Task CreateMqttWebSocketUriAsync(CreateMqttWebSocketUriRequest request, CancellationToken cancelToken = default)
+        public virtual Task<CreateMqttWebSocketUriResponse> CreateMqttWebSocketUriAsync(CreateMqttWebSocketUriRequest request, CancellationToken cancelToken = default)
         {
-            var credsTask = Credentials.GetCredentialsAsync();
-            var marshaller = CreateMqttWebSocketUriRequestMarshaller.Instance;
-            var iRequest = marshaller.Marshall(request);
-            var signer = CreateAWS4Signer();
-            cancelToken.ThrowIfCancellationRequested();
-            var creds = await credsTask.ConfigureAwait(continueOnCapturedContext: false);
-            cancelToken.ThrowIfCancellationRequested();
-            var signResult = signer.SignRequest(iRequest,
-                Config, new RequestMetrics(),
-                creds.AccessKey, creds.SecretKey
-                );
-            cancelToken.ThrowIfCancellationRequested();
+            var marshaller = new CreateMqttWebSocketUriRequestMarshaller();
 
+            return InvokeAsync<CreateMqttWebSocketUriRequest, CreateMqttWebSocketUriResponse>(request, marshaller,
+                null, cancelToken);
         }
 
         #endregion

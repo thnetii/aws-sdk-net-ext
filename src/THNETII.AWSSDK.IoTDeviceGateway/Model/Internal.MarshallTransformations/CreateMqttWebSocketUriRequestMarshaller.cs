@@ -21,7 +21,8 @@ namespace Amazon.IoTDeviceGateway.Model.Internal.MarshallTransformations
             {
                 HttpMethod = "GET",
                 Endpoint = new Uri($"wss://{input.EndpointAddress}"),
-                ResourcePath = "/mqtt"
+                ResourcePath = "/mqtt",
+                UseSigV4 = true
             };
         }
 
