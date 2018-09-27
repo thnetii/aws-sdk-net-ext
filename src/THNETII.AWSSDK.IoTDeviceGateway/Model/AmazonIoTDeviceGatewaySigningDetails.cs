@@ -12,5 +12,6 @@ namespace Amazon.IoTDeviceGateway.Model
         public string Scope { get; set; }
         public string Signature { get; set; }
         public IDictionary<string, string> SignedHeaders { get; set; }
+        public string EncodedQueryParameters { get; set; }
     }
 }

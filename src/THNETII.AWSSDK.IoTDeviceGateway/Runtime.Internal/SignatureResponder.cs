@@ -43,6 +43,21 @@ namespace Amazon.IoTDeviceGateway.Runtime.Internal
                 AccessKeyId = signerResult.AccessKeyId,
                 AuthorizationHeader = signerResult.ForAuthorizationHeader,
                 QueryParameters = signerResult.ForQueryParameters,
+                EncodedQueryParameters = string.Join("&", signerResult.ForQueryParameters.Split('&')
+                    .Select(qPair =>
+                    {
+                        string key, value = string.Empty;
+                        int eqIdx = qPair.IndexOf('=');
+                        if (eqIdx < 0)
+                            key = Uri.EscapeDataString(qPair);
+                        else
+                        {
+                            key = Uri.EscapeDataString(qPair.Substring(startIndex: 0, length: eqIdx));
+                            value = Uri.EscapeDataString(qPair.Substring(eqIdx + 1));
+                        }
+                        return key + '=' + value;
+                    })
+                ),
                 ISO8601Date = signerResult.ISO8601Date,
                 ISO8601DateTime = signerResult.ISO8601DateTime,
                 Scope = signerResult.Scope,
