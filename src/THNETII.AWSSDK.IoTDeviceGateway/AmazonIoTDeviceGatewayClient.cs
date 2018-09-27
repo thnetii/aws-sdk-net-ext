@@ -197,10 +197,6 @@ namespace Amazon.IoTDeviceGateway
                 (innerHandler as IDisposable)?.Dispose();
             }
             signatureResponder.InnerHandler = null;
-
-#if DEBUG
-            pipeline.AddHandler(new DebuggerHandler());
-#endif
         }
 
         #endregion
