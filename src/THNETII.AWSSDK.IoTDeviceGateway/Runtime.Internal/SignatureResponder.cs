@@ -4,6 +4,7 @@ using Amazon.Runtime;
 using Amazon.Runtime.Internal;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -32,7 +33,6 @@ namespace Amazon.IoTDeviceGateway.Runtime.Internal
                 return;
             var response = unmarshaller.CreateResponse();
             response.RequestUri = new Uri(executionContext.RequestContext.Request.Endpoint, executionContext.RequestContext.Request.ResourcePath);
-            response.Headers = new Dictionary<string, string>(executionContext.RequestContext.Request.Headers);
 
             var signerResult = executionContext.RequestContext.Request.AWS4SignerResult;
             if (signerResult is null)
@@ -40,13 +40,18 @@ namespace Amazon.IoTDeviceGateway.Runtime.Internal
             response.SigningDetails = new AmazonIoTDeviceGatewaySigningDetails
             {
                 AccessKeyId = signerResult.AccessKeyId,
-                ForAuthorizationHeader = signerResult.ForAuthorizationHeader,
-                ForQueryParameters = signerResult.ForQueryParameters,
+                AuthorizationHeader = signerResult.ForAuthorizationHeader,
+                QueryParameters = signerResult.ForQueryParameters,
                 ISO8601Date = signerResult.ISO8601Date,
                 ISO8601DateTime = signerResult.ISO8601DateTime,
                 Scope = signerResult.Scope,
                 Signature = signerResult.Signature,
-                SignedHeaders = signerResult.SignedHeaders
+                SignedHeaders = signerResult.SignedHeaders.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries)
+                    .ToDictionary(header => header, header =>
+                    {
+                        executionContext.RequestContext.Request.Headers.TryGetValue(header, out string value);
+                        return value;
+                    }, StringComparer.OrdinalIgnoreCase)
             };
 
             response.HttpStatusCode = HttpStatusCode.OK;
