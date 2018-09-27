@@ -1,7 +1,5 @@
-﻿using Amazon.Util;
-using MQTTnet.Client;
+﻿using MQTTnet.Client;
 using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -19,13 +17,13 @@ namespace Amazon.IoTDeviceGateway
             }, cancelToken).ConfigureAwait(continueOnCapturedContext: false);
 
             var options = new MqttClientOptionsBuilder()
-                .WithWebSocketServer(uriDetails.RequestUri.ToString())
+                .WithTls()
+                .WithWebSocketServer(uriDetails.RequestUri + "?" + uriDetails.SigningDetails.EncodedQueryParameters)
                 .Build();
 
             if (options.ChannelOptions is MqttClientWebSocketOptions webSocketOptions)
             {
-                webSocketOptions.RequestHeaders = new Dictionary<string, string>(uriDetails.SigningDetails.SignedHeaders, StringComparer.OrdinalIgnoreCase);
-                webSocketOptions.RequestHeaders[HeaderKeys.AuthorizationHeader] = uriDetails.SigningDetails.AuthorizationHeader;
+                webSocketOptions.RequestHeaders = uriDetails.SigningDetails.SignedHeaders;
             }
 
             return options;
