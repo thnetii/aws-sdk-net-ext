@@ -4,6 +4,7 @@ using Amazon.Runtime;
 using Amazon.Runtime.Internal;
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace Amazon.IoTDeviceGateway.Runtime.Internal
@@ -48,6 +49,7 @@ namespace Amazon.IoTDeviceGateway.Runtime.Internal
                 SignedHeaders = signerResult.SignedHeaders
             };
 
+            response.HttpStatusCode = HttpStatusCode.OK;
             executionContext.ResponseContext.Response = response;
         }
     }
