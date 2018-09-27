@@ -204,9 +204,10 @@ namespace Amazon.IoTDeviceGateway
         public virtual Task<CreateMqttWebSocketUriResponse> CreateMqttWebSocketUriAsync(CreateMqttWebSocketUriRequest request, CancellationToken cancelToken = default)
         {
             var marshaller = new CreateMqttWebSocketUriRequestMarshaller();
+            var unmarshaller = new CreateMqttWebSocketUriResponseUnmarshaller();
 
             return InvokeAsync<CreateMqttWebSocketUriRequest, CreateMqttWebSocketUriResponse>(request, marshaller,
-                null, cancelToken);
+                unmarshaller, cancelToken);
         }
 
         #endregion
