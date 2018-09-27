@@ -3,6 +3,7 @@ using Amazon.IoTDeviceGateway.Model.Internal.MarshallTransformations;
 using Amazon.Runtime;
 using Amazon.Runtime.Internal;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Amazon.IoTDeviceGateway.Runtime.Internal
@@ -30,6 +31,7 @@ namespace Amazon.IoTDeviceGateway.Runtime.Internal
                 return;
             var response = unmarshaller.CreateResponse();
             response.RequestUri = new Uri(executionContext.RequestContext.Request.Endpoint, executionContext.RequestContext.Request.ResourcePath);
+            response.Headers = new Dictionary<string, string>(executionContext.RequestContext.Request.Headers);
 
             var signerResult = executionContext.RequestContext.Request.AWS4SignerResult;
             if (signerResult is null)
