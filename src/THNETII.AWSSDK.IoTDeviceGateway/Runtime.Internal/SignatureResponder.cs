@@ -37,6 +37,7 @@ namespace Amazon.IoTDeviceGateway.Runtime.Internal
             var signerResult = executionContext.RequestContext.Request.AWS4SignerResult;
             if (signerResult is null)
                 return;
+            var signedHeaderKeys = new HashSet<string>(signerResult.SignedHeaders.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries), StringComparer.OrdinalIgnoreCase);
             response.SigningDetails = new AmazonIoTDeviceGatewaySigningDetails
             {
                 AccessKeyId = signerResult.AccessKeyId,
@@ -46,12 +47,9 @@ namespace Amazon.IoTDeviceGateway.Runtime.Internal
                 ISO8601DateTime = signerResult.ISO8601DateTime,
                 Scope = signerResult.Scope,
                 Signature = signerResult.Signature,
-                SignedHeaders = signerResult.SignedHeaders.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries)
-                    .ToDictionary(header => header, header =>
-                    {
-                        executionContext.RequestContext.Request.Headers.TryGetValue(header, out string value);
-                        return value;
-                    }, StringComparer.OrdinalIgnoreCase)
+                SignedHeaders = executionContext.RequestContext.Request.Headers
+                    .Where(headerPair => signedHeaderKeys.Contains(headerPair.Key))
+                    .ToDictionary(headerPair => headerPair.Key, headerPair => headerPair.Value, StringComparer.OrdinalIgnoreCase)
             };
 
             response.HttpStatusCode = HttpStatusCode.OK;
