@@ -186,6 +186,8 @@ namespace Amazon.IoTDeviceGateway
         {
             base.CustomizeRuntimePipeline(pipeline);
 
+            pipeline.ReplaceHandler<Signer>(new MqttWebSocketSigner());
+
             var signatureResponder = new SignatureResponder();
 
             pipeline.AddHandlerBefore<Unmarshaller>(signatureResponder);

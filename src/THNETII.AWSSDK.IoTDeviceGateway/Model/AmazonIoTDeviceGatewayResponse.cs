@@ -2,7 +2,7 @@
 
 namespace Amazon.IoTDeviceGateway.Model
 {
-    public class CreateMqttWebSocketUriResponse : AmazonIoTDeviceGatewayResponse
+    public class AmazonIoTDeviceGatewayResponse : AmazonWebServiceResponse
     {
     }
 }
