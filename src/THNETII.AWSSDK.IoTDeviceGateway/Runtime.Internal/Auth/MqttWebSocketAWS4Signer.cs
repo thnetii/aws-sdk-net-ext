@@ -3,6 +3,7 @@ using Amazon.Runtime.Internal;
 using Amazon.Runtime.Internal.Auth;
 using Amazon.Runtime.Internal.Util;
 using Amazon.Util;
+using System.Diagnostics;
 
 namespace Amazon.IoTDeviceGateway.Runtime.Internal.Auth
 {
@@ -10,13 +11,18 @@ namespace Amazon.IoTDeviceGateway.Runtime.Internal.Auth
     {
         public MqttWebSocketAWS4Signer() : base() { }
 
-        public override ClientProtocol Protocol => ClientProtocol.QueryStringProtocol;
-
         public override void Sign(IRequest request, IClientConfig clientConfig, RequestMetrics metrics, string awsAccessKeyId, string awsSecretAccessKey)
         {
-            //request.Headers.Remove(HeaderKeys.XAmzSecurityTokenHeader);
+            var hasStsTokenHeader = request.Headers.TryGetValue(HeaderKeys.XAmzSecurityTokenHeader, out string stsTokenValue);
+            if (hasStsTokenHeader)
+            {
+                var removedStsTokenHeader = request.Headers.Remove(HeaderKeys.XAmzSecurityTokenHeader);
+                Debug.Assert(removedStsTokenHeader, $"Unable to remove {HeaderKeys.XAmzSecurityTokenHeader} header from request before signing");
+            }
             var signingResult = SignRequest(request, clientConfig, metrics, awsAccessKeyId, awsSecretAccessKey);
             request.AWS4SignerResult = signingResult;
+            if (hasStsTokenHeader)
+                request.Parameters[HeaderKeys.XAmzSecurityTokenHeader] = stsTokenValue;
         }
 
         public new AWS4SigningResult SignRequest(IRequest request, IClientConfig clientConfig, RequestMetrics metrics, string awsAccessKeyId, string awsSecretAccessKey)
