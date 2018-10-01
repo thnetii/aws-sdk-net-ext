@@ -22,7 +22,7 @@ namespace Amazon.IoTDeviceGateway.Runtime.Internal.Auth
             var signingResult = SignRequest(request, clientConfig, metrics, awsAccessKeyId, awsSecretAccessKey);
             request.AWS4SignerResult = signingResult;
             if (hasStsTokenHeader)
-                request.Parameters[HeaderKeys.XAmzSecurityTokenHeader] = stsTokenValue;
+                request.Parameters["X-Amz-Security-Token"] = stsTokenValue;
         }
 
         public new AWS4SigningResult SignRequest(IRequest request, IClientConfig clientConfig, RequestMetrics metrics, string awsAccessKeyId, string awsSecretAccessKey)
