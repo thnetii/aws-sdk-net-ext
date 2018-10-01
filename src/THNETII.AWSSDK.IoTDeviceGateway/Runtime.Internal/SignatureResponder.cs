@@ -1,9 +1,10 @@
-﻿using Amazon.IoTDeviceGateway.Model;
-using Amazon.IoTDeviceGateway.Model.Internal.MarshallTransformations;
+﻿using Amazon.IoTDeviceGateway.Model.Internal.MarshallTransformations;
 using Amazon.Runtime;
 using Amazon.Runtime.Internal;
+using Amazon.Runtime.Internal.Auth;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -31,43 +32,28 @@ namespace Amazon.IoTDeviceGateway.Runtime.Internal
         {
             if (!(executionContext.RequestContext.Unmarshaller is AmazonIoTDeviceGatewayResponseUnmarshaller unmarshaller))
                 return;
+
             var response = unmarshaller.CreateResponse();
-            response.RequestUri = new Uri(executionContext.RequestContext.Request.Endpoint, executionContext.RequestContext.Request.ResourcePath);
 
-            var signerResult = executionContext.RequestContext.Request.AWS4SignerResult;
-            if (signerResult is null)
-                return;
-            var signedHeaderKeys = new HashSet<string>(signerResult.SignedHeaders.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries), StringComparer.OrdinalIgnoreCase);
-            response.SigningDetails = new AmazonIoTDeviceGatewaySigningDetails
+            IRequest request = executionContext.RequestContext.Request;
+
+            var signerResult = request.AWS4SignerResult;
+            if (!(signerResult is null))
             {
-                AccessKeyId = signerResult.AccessKeyId,
-                AuthorizationHeader = signerResult.ForAuthorizationHeader,
-                QueryParameters = signerResult.ForQueryParameters,
-                EncodedQueryParameters = string.Join("&", signerResult.ForQueryParameters.Split('&')
-                    .Select(qPair =>
-                    {
-                        string key, value = string.Empty;
-                        int eqIdx = qPair.IndexOf('=');
-                        if (eqIdx < 0)
-                            key = Uri.EscapeDataString(qPair);
-                        else
-                        {
-                            key = Uri.EscapeDataString(qPair.Substring(startIndex: 0, length: eqIdx));
-                            value = Uri.EscapeDataString(qPair.Substring(eqIdx + 1));
-                        }
-                        return key + '=' + value;
-                    })
-                ),
-                ISO8601Date = signerResult.ISO8601Date,
-                ISO8601DateTime = signerResult.ISO8601DateTime,
-                Scope = signerResult.Scope,
-                Signature = signerResult.Signature,
-                SignedHeaders = executionContext.RequestContext.Request.Headers
-                    .Where(headerPair => signedHeaderKeys.Contains(headerPair.Key))
-                    .ToDictionary(headerPair => headerPair.Key, headerPair => headerPair.Value, StringComparer.OrdinalIgnoreCase)
-            };
+                var signedHeaderKeys = new HashSet<string>(signerResult.SignedHeaders.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries), StringComparer.OrdinalIgnoreCase);
+                response.Headers = signedHeaderKeys.ToDictionary(k => k,
+                    k => request.Headers[k], StringComparer.OrdinalIgnoreCase);
 
+                request.Parameters["X-Amz-Algorithm"] = AWS4Signer.AWS4AlgorithmTag;
+                request.Parameters["X-Amz-Credential"] = string.Format(CultureInfo.InvariantCulture, "{0}/{1}", signerResult.AccessKeyId, signerResult.Scope);
+                request.Parameters["X-Amz-Date"] = signerResult.ISO8601DateTime;
+                request.Parameters["X-Amz-SignedHeaders"] = signerResult.SignedHeaders;
+                request.Parameters["X-Amz-Signature"] = signerResult.Signature;
+            }
+
+            response.RequestUri = AmazonServiceClient.ComposeUrl(request);
             response.HttpStatusCode = HttpStatusCode.OK;
+
             executionContext.ResponseContext.Response = response;
         }
     }

@@ -10,6 +10,8 @@ namespace Amazon.IoTDeviceGateway.Runtime.Internal.Auth
     {
         public MqttWebSocketAWS4Signer() : base() { }
 
+        public override ClientProtocol Protocol => ClientProtocol.QueryStringProtocol;
+
         public override void Sign(IRequest request, IClientConfig clientConfig, RequestMetrics metrics, string awsAccessKeyId, string awsSecretAccessKey)
         {
             //request.Headers.Remove(HeaderKeys.XAmzSecurityTokenHeader);

@@ -27,7 +27,6 @@ namespace Amazon.IoTDeviceGateway.Model.Internal.MarshallTransformations
                 Content = Array.Empty<byte>(),
                 UseQueryString = true
             };
-            request.Headers[nameof(System.Net.HttpRequestHeader.Host)] = input.EndpointAddress;
             return request;
         }
 
