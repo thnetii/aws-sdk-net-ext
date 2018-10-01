@@ -2,6 +2,7 @@
 using Amazon.Runtime.Internal;
 using Amazon.Runtime.Internal.Transform;
 using System;
+using System.Net.Http;
 
 namespace Amazon.IoTDeviceGateway.Model.Internal.MarshallTransformations
 {
@@ -17,13 +18,17 @@ namespace Amazon.IoTDeviceGateway.Model.Internal.MarshallTransformations
         /// <inheritdoc />
         public IRequest Marshall(CreateMqttWebSocketUriRequest input)
         {
-            return new DefaultRequest(input, AmazonIoTDeviceGatewayConfig.ServiceName)
+            var request = new DefaultRequest(input, AmazonIoTDeviceGatewayConfig.ServiceName)
             {
-                HttpMethod = "GET",
+                HttpMethod = HttpMethod.Get.Method,
                 Endpoint = new Uri($"wss://{input.EndpointAddress}"),
                 ResourcePath = "/mqtt",
-                UseSigV4 = true
+                UseSigV4 = true,
+                Content = Array.Empty<byte>(),
+                UseQueryString = true
             };
+            request.Headers[nameof(System.Net.HttpRequestHeader.Host)] = input.EndpointAddress;
+            return request;
         }
 
         internal static CreateMqttWebSocketUriRequestMarshaller GetInstance() =>
