@@ -8,7 +8,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 		.gitattributes = .gitattributes
 		.gitignore = .gitignore
-		.gitmodules = .gitmodules
 		AllRules.ruleset = AllRules.ruleset
 		Directory.Build.props = Directory.Build.props
 		LICENSE = LICENSE
@@ -19,14 +18,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "THNETII.AWSSDK.IoTDeviceGateway", "src\THNETII.AWSSDK.IoTDeviceGateway\THNETII.AWSSDK.IoTDeviceGateway.csproj", "{9E63967A-C9DD-4EF1-A073-2A86B4A02153}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "THNETII.AWSSDK.IoTDeviceGateway.Mqtt", "src\THNETII.AWSSDK.IoTDeviceGateway.Mqtt\THNETII.AWSSDK.IoTDeviceGateway.Mqtt.csproj", "{A12B65D2-3461-4AAC-81FE-B72850A0986D}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "aws-sdk-net", "aws-sdk-net", "{FBE3FBEA-C698-40D3-A813-BC8A35CC3B25}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sdk", "sdk", "{22E441D8-D616-4573-8BA0-EB7CA8F870B4}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{CCA39355-5055-4765-8E90-CAC2C54CAA9A}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AWSSDK.Core.CoreCLR", "aws-sdk-net\sdk\src\Core\AWSSDK.Core.CoreCLR.csproj", "{D5568063-4354-4931-AF09-4B69496387C1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -62,18 +53,6 @@ Global
 		{A12B65D2-3461-4AAC-81FE-B72850A0986D}.Release|x64.Build.0 = Release|Any CPU
 		{A12B65D2-3461-4AAC-81FE-B72850A0986D}.Release|x86.ActiveCfg = Release|Any CPU
 		{A12B65D2-3461-4AAC-81FE-B72850A0986D}.Release|x86.Build.0 = Release|Any CPU
-		{D5568063-4354-4931-AF09-4B69496387C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D5568063-4354-4931-AF09-4B69496387C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D5568063-4354-4931-AF09-4B69496387C1}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{D5568063-4354-4931-AF09-4B69496387C1}.Debug|x64.Build.0 = Debug|Any CPU
-		{D5568063-4354-4931-AF09-4B69496387C1}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{D5568063-4354-4931-AF09-4B69496387C1}.Debug|x86.Build.0 = Debug|Any CPU
-		{D5568063-4354-4931-AF09-4B69496387C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D5568063-4354-4931-AF09-4B69496387C1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D5568063-4354-4931-AF09-4B69496387C1}.Release|x64.ActiveCfg = Release|Any CPU
-		{D5568063-4354-4931-AF09-4B69496387C1}.Release|x64.Build.0 = Release|Any CPU
-		{D5568063-4354-4931-AF09-4B69496387C1}.Release|x86.ActiveCfg = Release|Any CPU
-		{D5568063-4354-4931-AF09-4B69496387C1}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -81,9 +60,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{9E63967A-C9DD-4EF1-A073-2A86B4A02153} = {6C8D0095-02C0-4BE2-983D-F53E7B88513D}
 		{A12B65D2-3461-4AAC-81FE-B72850A0986D} = {6C8D0095-02C0-4BE2-983D-F53E7B88513D}
-		{22E441D8-D616-4573-8BA0-EB7CA8F870B4} = {FBE3FBEA-C698-40D3-A813-BC8A35CC3B25}
-		{CCA39355-5055-4765-8E90-CAC2C54CAA9A} = {22E441D8-D616-4573-8BA0-EB7CA8F870B4}
-		{D5568063-4354-4931-AF09-4B69496387C1} = {CCA39355-5055-4765-8E90-CAC2C54CAA9A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FDA65BA9-6D00-486E-B94D-AF4DA39E03C0}
