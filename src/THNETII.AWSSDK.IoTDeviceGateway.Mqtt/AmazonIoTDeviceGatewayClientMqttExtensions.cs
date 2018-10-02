@@ -49,7 +49,7 @@ namespace Amazon.IoTDeviceGateway
             return options;
         }
 
-        public static async Task<MqttClientConnectResult> ConnectMqttWebSocketsClient(this AmazonIoTDeviceGatewayClient client,
+        public static async Task<MqttClientConnectResult> ConnectMqttWebSocketsClientAsync(this AmazonIoTDeviceGatewayClient client,
             string iotEndpointAddress, IMqttClient mqttClient, CancellationToken cancelToken = default)
         {
             var optionsTask = client.CreateMqttWebSocketClientOptionsAsync(iotEndpointAddress, cancelToken);
