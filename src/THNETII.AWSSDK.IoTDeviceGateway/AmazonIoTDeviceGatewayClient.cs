@@ -176,10 +176,8 @@ namespace Amazon.IoTDeviceGateway
 
         #region Overrides
 
-        private AWS4Signer CreateAWS4Signer() => new AWS4Signer();
-
         /// <inheritdoc />
-        protected override AbstractAWSSigner CreateSigner() => CreateAWS4Signer();
+        protected override AbstractAWSSigner CreateSigner() => new AWS4Signer();
 
         /// <inheritdoc />
         protected override void CustomizeRuntimePipeline(RuntimePipeline pipeline)
