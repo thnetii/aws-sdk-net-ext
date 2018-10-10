@@ -1,6 +1,4 @@
-﻿using Amazon.IoTDeviceGateway.Runtime.Internal.Auth;
-using Amazon.Runtime;
-using Amazon.Runtime.Internal.Auth;
+﻿using Amazon.Runtime;
 
 namespace Amazon.IoTDeviceGateway.Model
 {
@@ -9,8 +7,5 @@ namespace Amazon.IoTDeviceGateway.Model
     /// </summary>
     public class AmazonIoTDeviceGatewayRequest : AmazonWebServiceRequest
     {
-        /// <inheritdoc />
-        protected override AbstractAWSSigner CreateSigner() =>
-            new MqttWebSocketAWS4Signer();
     }
 }

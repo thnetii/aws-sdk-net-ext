@@ -3,7 +3,6 @@ using Amazon.Runtime.Internal;
 using Amazon.Runtime.Internal.Auth;
 using Amazon.Runtime.Internal.Util;
 using Amazon.Util;
-using System.Diagnostics;
 
 namespace Amazon.IoTDeviceGateway.Runtime.Internal.Auth
 {
@@ -14,11 +13,7 @@ namespace Amazon.IoTDeviceGateway.Runtime.Internal.Auth
         public override void Sign(IRequest request, IClientConfig clientConfig, RequestMetrics metrics, string awsAccessKeyId, string awsSecretAccessKey)
         {
             var hasStsTokenHeader = request.Headers.TryGetValue(HeaderKeys.XAmzSecurityTokenHeader, out string stsTokenValue);
-            if (hasStsTokenHeader)
-            {
-                var removedStsTokenHeader = request.Headers.Remove(HeaderKeys.XAmzSecurityTokenHeader);
-                Debug.Assert(removedStsTokenHeader, $"Unable to remove {HeaderKeys.XAmzSecurityTokenHeader} header from request before signing");
-            }
+            request.Headers.Clear();
             var signingResult = SignRequest(request, clientConfig, metrics, awsAccessKeyId, awsSecretAccessKey);
             request.AWS4SignerResult = signingResult;
             if (hasStsTokenHeader)

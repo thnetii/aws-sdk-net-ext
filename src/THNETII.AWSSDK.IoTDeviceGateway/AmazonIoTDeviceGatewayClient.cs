@@ -5,6 +5,9 @@ using Amazon.Runtime;
 using Amazon.Runtime.Internal;
 using Amazon.Runtime.Internal.Auth;
 using System;
+#if NETSTANDARD1_3
+using System.Reflection;
+#endif
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -184,30 +187,71 @@ namespace Amazon.IoTDeviceGateway
         {
             base.CustomizeRuntimePipeline(pipeline);
 
-            var signatureResponder = new SignatureResponder();
-
-            pipeline.AddHandlerBefore<Unmarshaller>(signatureResponder);
-
-            for (var innerHandler = signatureResponder.InnerHandler; !(innerHandler is null); innerHandler = innerHandler.InnerHandler)
+            var httpHandlerOpenGenericType = typeof(HttpHandler<>);
+            foreach (var pipelineHandler in pipeline.EnumerateHandlers())
             {
-                (innerHandler as IDisposable)?.Dispose();
+                bool doBreak = false;
+                for (Type handlerType = pipelineHandler.GetType(); !(handlerType is null) && handlerType != typeof(object); handlerType = GetBaseType(handlerType))
+                {
+                    var handlerTypeInfo = GetTypeInfo(handlerType);
+                    if (handlerTypeInfo.IsGenericType && handlerTypeInfo.GetGenericTypeDefinition() == httpHandlerOpenGenericType)
+                    {
+                        var nonHttpHandler = new NonHttpHandler()
+                        {
+                            OuterHandler = pipelineHandler.OuterHandler,
+                            InnerHandler = pipelineHandler,
+                            Logger = pipelineHandler.Logger
+                        };
+
+                        pipelineHandler.OuterHandler.InnerHandler = nonHttpHandler;
+                        pipelineHandler.OuterHandler = nonHttpHandler;
+
+                        doBreak = true;
+                        break;
+                    }
+                }
+                if (doBreak)
+                    break;
             }
-            signatureResponder.InnerHandler = null;
         }
 
         #endregion
 
-        #region CreateMqttWebSocketUri
+        #region Private Helper methods
+
+        private static
+#if NETSTANDARD1_3
+            TypeInfo
+#else
+            Type
+#endif
+            GetTypeInfo(Type type)
+        {
+            return type
+#if NETSTANDARD1_3
+                .GetTypeInfo()
+#endif
+                ;
+        }
+
+        private static Type GetBaseType(Type type)
+        {
+            return GetTypeInfo(type).BaseType;
+        }
+
+#endregion
+
+#region CreateMqttWebSocketUri
 
         public virtual Task<CreateMqttWebSocketUriResponse> CreateMqttWebSocketUriAsync(CreateMqttWebSocketUriRequest request, CancellationToken cancelToken = default)
         {
-            var marshaller = new CreateMqttWebSocketUriRequestMarshaller();
-            var unmarshaller = new CreateMqttWebSocketUriResponseUnmarshaller();
+            var marshaller = CreateMqttWebSocketUriRequestMarshaller.Instance;
+            var unmarshaller = CreateMqttWebSocketUriResponseUnmarshaller.Instance;
 
             return InvokeAsync<CreateMqttWebSocketUriRequest, CreateMqttWebSocketUriResponse>(request, marshaller,
                 unmarshaller, cancelToken);
         }
 
-        #endregion
+#endregion
     }
 }
