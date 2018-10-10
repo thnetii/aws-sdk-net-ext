@@ -2,7 +2,7 @@
 <Project>
   <PropertyGroup Label="Common Package Metadata">
     <Authors>Fredrik Høisæther Rasch</Authors>
-    <Product>TH-NETII Amazon Web Serivces SDK Extensions for .NETcd aws </Product>
+    <Product>TH-NETII Amazon Web Serivces SDK Extensions for .NET</Product>
     <Company>TH-NETII Rasch Solutions</Company>
     <Copyright>Written by Fredrik Høisæther Rasch, $([System.DateTime]::Now.Year)</Copyright>
   </PropertyGroup>
@@ -19,10 +19,11 @@
     <BaseIntermediateOutputPath>$(MSBuildThisFileDirectory)obj\$(MSBuildProjectName)\</BaseIntermediateOutputPath>
   </PropertyGroup>
   <PropertyGroup Label="Version">
-    <VersionPrefix>3.3.365</VersionPrefix>
+    <VersionPrefix>3.3.379.1</VersionPrefix>
     <FileVersion>$(VersionPrefix)</FileVersion>
-    <AssemblyVersion Condition="'$(BuildNumber)'==''">$(FileVersion)</AssemblyVersion>
-    <AssemblyVersion Condition="'$(BuildNumber)'!=''">$(FileVersion).$(BuildNumber)</AssemblyVersion>
+    <AssemblyVersion>$(FileVersion)</AssemblyVersion>
+    <!--<AssemblyVersion Condition="'$(BuildNumber)'==''">$(FileVersion)</AssemblyVersion>-->
+    <!--<AssemblyVersion Condition="'$(BuildNumber)'!=''">$(FileVersion).$(BuildNumber)</AssemblyVersion>-->
     <VersionSuffix Condition="'$(BuildNumber)'!='' And '$(VersionSuffix)'!=''">$(VersionSuffix)-b$(BuildNumber)</VersionSuffix>
     <VersionSuffix Condition="'$(BuildNumber)'!='' And '$(VersionSuffix)'==''">$(VersionSuffix)b$(BuildNumber)</VersionSuffix>
   </PropertyGroup>
