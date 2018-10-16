@@ -12,17 +12,6 @@
             "_site/**"
           ],
           "src": "../../"
-        },
-        {
-          "files": [
-            "AWSSDK.Core.CoreCLR.csproj"
-          ],
-          "exclude": [
-            "**/bin/**",
-            "**/obj/**",
-            "_site/**"
-          ],
-          "src": "../../aws-sdk-net/sdk/src/Core"
         }
       ],
       "dest": "api",
