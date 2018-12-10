@@ -20,7 +20,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="2.2.0" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
-    <PackageReference Include="MQTTnet" Version="2.8.4" />
+    <PackageReference Include="MQTTnet" Version="2.8.5" />
   </ItemGroup>
 
   <ItemGroup Condition="Exists('..\..\aws-sdk-net\sdk\src')">
