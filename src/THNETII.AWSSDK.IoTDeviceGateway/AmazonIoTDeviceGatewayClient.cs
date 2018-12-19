@@ -241,7 +241,7 @@ namespace Amazon.IoTDeviceGateway
 
 #endregion
 
-#region CreateMqttWebSocketUri
+        #region CreateMqttWebSocketUri
 
         public virtual Task<CreateMqttWebSocketUriResponse> CreateMqttWebSocketUriAsync(CreateMqttWebSocketUriRequest request, CancellationToken cancelToken = default)
         {
@@ -252,6 +252,6 @@ namespace Amazon.IoTDeviceGateway
                 unmarshaller, cancelToken);
         }
 
-#endregion
+        #endregion
     }
 }
