@@ -2,6 +2,7 @@
 using Amazon.Runtime.Internal.Transform;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -27,8 +28,6 @@ namespace Amazon.IoTDeviceGateway.Runtime.Internal.Transform
 
         public IRequest OriginalRequest { get; set; }
 
-        public void Dispose() { }
-
         public string[] GetHeaderNames()
         {
             return (Headers is null)
@@ -49,5 +48,20 @@ namespace Amazon.IoTDeviceGateway.Runtime.Internal.Transform
         public Stream OpenResponse() => Stream.Null;
 
         public Task<Stream> OpenResponseAsync() => Task.FromResult(OpenResponse());
+
+        #region IDisposable
+        [DebuggerStepThrough]
+        protected virtual void Dispose(bool disposing)
+        {
+            // Intentionally left empty
+        }
+
+        /// <inheritdoc cref="IDisposable.Dispose" />
+        public void Dispose()
+        {
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
+        }
+        #endregion
     }
 }
