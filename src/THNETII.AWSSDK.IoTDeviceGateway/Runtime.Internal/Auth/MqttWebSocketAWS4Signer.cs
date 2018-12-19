@@ -20,7 +20,7 @@ namespace Amazon.IoTDeviceGateway.Runtime.Internal.Auth
                 request.Parameters["X-Amz-Security-Token"] = stsTokenValue;
         }
 
-        public new AWS4SigningResult SignRequest(IRequest request, IClientConfig clientConfig, RequestMetrics metrics, string awsAccessKeyId, string awsSecretAccessKey)
+        public static new AWS4SigningResult SignRequest(IRequest request, IClientConfig clientConfig, RequestMetrics metrics, string awsAccessKeyId, string awsSecretAccessKey)
         {
             var service = !string.IsNullOrEmpty(clientConfig.AuthenticationServiceName)
                 ? clientConfig.AuthenticationServiceName
