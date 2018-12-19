@@ -10,7 +10,7 @@ namespace Amazon.IoTDeviceGateway.Runtime.Internal.Transform
             WebResponseData = nonHttpResponseData;
         }
 
-        public NonHttpResponseData ResponseData { get; }
+        public new NonHttpResponseData ResponseData { get; }
 
         public override string CurrentPath => default;
 
