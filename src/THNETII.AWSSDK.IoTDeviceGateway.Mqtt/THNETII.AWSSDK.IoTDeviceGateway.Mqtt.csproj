@@ -8,7 +8,7 @@
     <RootNamespace>Amazon.IoTDeviceGateway</RootNamespace>
   </PropertyGroup>
 
-  <PropertyGroup Label="Version" Condition="'$(VersionPrefix)'==''">
+  <PropertyGroup Label="Version" Condition="'$(VersionPrefix)'!=''">
     <FileVersion>$(VersionPrefix)</FileVersion>
     <AssemblyVersion>$(VersionPrefix)</AssemblyVersion>
   </PropertyGroup>
