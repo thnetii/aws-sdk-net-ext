@@ -1,15 +1,16 @@
-﻿using Amazon.IoTDeviceGateway.Model;
-using Amazon.IoTDeviceGateway.Model.Internal.MarshallTransformations;
-using Amazon.IoTDeviceGateway.Runtime.Internal;
-using Amazon.Runtime;
-using Amazon.Runtime.Internal;
-using Amazon.Runtime.Internal.Auth;
-using System;
+﻿using System;
 #if NETSTANDARD1_3
 using System.Reflection;
 #endif
 using System.Threading;
 using System.Threading.Tasks;
+
+using Amazon.IoTDeviceGateway.Model;
+using Amazon.IoTDeviceGateway.Model.Internal.MarshallTransformations;
+using Amazon.IoTDeviceGateway.Runtime.Internal;
+using Amazon.Runtime;
+using Amazon.Runtime.Internal;
+using Amazon.Runtime.Internal.Auth;
 
 namespace Amazon.IoTDeviceGateway
 {
@@ -239,7 +240,7 @@ namespace Amazon.IoTDeviceGateway
             return GetTypeInfo(type).BaseType;
         }
 
-#endregion
+        #endregion
 
         #region CreateMqttWebSocketUri
 

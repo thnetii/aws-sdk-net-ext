@@ -1,9 +1,10 @@
-﻿using Amazon.Runtime;
-using Amazon.Runtime.Internal.Transform;
-using Amazon.Runtime.Internal.Util;
-using System;
+﻿using System;
 using System.IO;
 using System.Net;
+
+using Amazon.Runtime;
+using Amazon.Runtime.Internal.Transform;
+using Amazon.Runtime.Internal.Util;
 
 namespace Amazon.IoTDeviceGateway.Runtime.Internal.Transform
 {

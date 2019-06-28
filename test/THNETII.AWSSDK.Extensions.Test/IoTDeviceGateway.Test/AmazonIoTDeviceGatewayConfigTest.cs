@@ -1,9 +1,7 @@
-﻿using Xunit;
-
-namespace Amazon.IoTDeviceGateway.Test
+﻿namespace Amazon.IoTDeviceGateway.Test
 {
     public class AmazonIoTDeviceGatewayConfigTest
     {
-        
+
     }
 }

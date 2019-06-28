@@ -1,11 +1,14 @@
-﻿using Amazon.CognitoIdentity;
-using Amazon.Runtime;
-using Microsoft.Extensions.FileProviders;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System;
+﻿using System;
 using System.IO;
 using System.Text;
+
+using Amazon.CognitoIdentity;
+using Amazon.Runtime;
+
+using Microsoft.Extensions.FileProviders;
+
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace Amazon.TestParameters
 {

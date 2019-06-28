@@ -1,11 +1,12 @@
-﻿using Amazon.IoTDeviceGateway.Runtime.Internal.Transform;
-using Amazon.Runtime;
-using Amazon.Runtime.Internal.Auth;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Net;
+
+using Amazon.IoTDeviceGateway.Runtime.Internal.Transform;
+using Amazon.Runtime;
+using Amazon.Runtime.Internal.Auth;
 
 namespace Amazon.IoTDeviceGateway.Model.Internal.MarshallTransformations
 {

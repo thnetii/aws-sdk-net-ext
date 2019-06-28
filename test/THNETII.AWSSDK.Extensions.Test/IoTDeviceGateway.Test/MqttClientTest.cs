@@ -1,7 +1,11 @@
-﻿using Amazon.TestParameters;
+﻿using System.Threading.Tasks;
+
+using Amazon.TestParameters;
+
 using MQTTnet;
 using MQTTnet.Client;
-using System.Threading.Tasks;
+using MQTTnet.Client.Options;
+
 using Xunit;
 
 namespace Amazon.IoTDeviceGateway.Test

@@ -1,8 +1,10 @@
-﻿using Microsoft.Extensions.FileProviders;
+﻿using System.IO;
+using System.Text;
+
+using Microsoft.Extensions.FileProviders;
+
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using System.IO;
-using System.Text;
 
 namespace Amazon.TestParameters
 {

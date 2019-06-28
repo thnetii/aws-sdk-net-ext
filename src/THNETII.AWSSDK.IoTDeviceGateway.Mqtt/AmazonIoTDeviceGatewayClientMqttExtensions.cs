@@ -1,8 +1,11 @@
-﻿using MQTTnet.Client;
-using System;
+﻿using System;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
+
+using MQTTnet.Client;
+using MQTTnet.Client.Connecting;
+using MQTTnet.Client.Options;
 
 namespace Amazon.IoTDeviceGateway
 {
@@ -49,7 +52,7 @@ namespace Amazon.IoTDeviceGateway
             return options;
         }
 
-        public static async Task<MqttClientConnectResult> ConnectMqttWebSocketsClientAsync(this AmazonIoTDeviceGatewayClient client,
+        public static async Task<MqttClientAuthenticateResult> ConnectMqttWebSocketsClientAsync(this AmazonIoTDeviceGatewayClient client,
             string iotEndpointAddress, IMqttClient mqttClient, CancellationToken cancelToken = default)
         {
             var optionsTask = client.CreateMqttWebSocketClientOptionsAsync(iotEndpointAddress, cancelToken);

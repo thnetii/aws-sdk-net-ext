@@ -1,8 +1,9 @@
-﻿using Amazon.IoTDeviceGateway.Runtime.Internal.Transform;
+﻿using System.Net;
+using System.Threading.Tasks;
+
+using Amazon.IoTDeviceGateway.Runtime.Internal.Transform;
 using Amazon.Runtime;
 using Amazon.Runtime.Internal;
-using System.Net;
-using System.Threading.Tasks;
 
 namespace Amazon.IoTDeviceGateway.Runtime.Internal
 {

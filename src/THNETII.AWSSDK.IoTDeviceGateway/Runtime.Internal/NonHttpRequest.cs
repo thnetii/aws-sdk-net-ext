@@ -1,6 +1,7 @@
-﻿using Amazon.Runtime;
+﻿using System.Diagnostics;
+
+using Amazon.Runtime;
 using Amazon.Runtime.Internal;
-using System.Diagnostics;
 
 namespace Amazon.IoTDeviceGateway.Runtime.Internal
 {
