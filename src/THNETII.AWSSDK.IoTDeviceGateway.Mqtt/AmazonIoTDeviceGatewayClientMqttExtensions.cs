@@ -7,10 +7,20 @@ using System.Threading.Tasks;
 
 namespace Amazon.IoTDeviceGateway
 {
+    /// <summary>
+    /// Provides MQTT.NET specific extenions for the IoT Device Gateway client.
+    /// </summary>
     public static class AmazonIoTDeviceGatewayClientMqttExtensions
     {
         private static readonly Uri localhostUri = new Uri("http://localhost/");
 
+        /// <summary>
+        /// Provides the MQTT client options to create an authenticated MQTT
+        /// over WebSocket connection to an AWS IoT Device Gateway endpoint.
+        /// </summary>
+        /// <param name="client">The authenticated AWS IoT Device Gateway client.</param>
+        /// <param name="iotEndpointAddress">The AWS account-specific AWS IoT endpoint address.</param>
+        /// <param name="cancelToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         public static async Task<IMqttClientOptions> CreateMqttWebSocketClientOptionsAsync(this AmazonIoTDeviceGatewayClient client, string iotEndpointAddress, CancellationToken cancelToken = default)
         {
             if (client is null)
@@ -50,6 +60,14 @@ namespace Amazon.IoTDeviceGateway
             return options;
         }
 
+        /// <summary>
+        /// Connects an MQTT client to an AWS IoT Endpoint using an authenticated
+        /// MQTT over WebSocket connection request
+        /// </summary>
+        /// <param name="client"></param>
+        /// <param name="iotEndpointAddress">The AWS account-specific AWS IoT endpoint address.</param>
+        /// <param name="mqttClient">An MQTT.NET client instance to connect.</param>
+        /// <param name="cancelToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         public static async Task<MqttClientConnectResult> ConnectMqttWebSocketsClientAsync(this AmazonIoTDeviceGatewayClient client,
             string iotEndpointAddress, IMqttClient mqttClient, CancellationToken cancelToken = default)
         {

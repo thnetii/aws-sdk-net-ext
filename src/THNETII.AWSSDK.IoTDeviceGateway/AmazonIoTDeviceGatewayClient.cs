@@ -256,6 +256,19 @@ namespace Amazon.IoTDeviceGateway
             ResponseUnmarshaller = CreateMqttWebSocketUriResponseUnmarshaller.Instance
         };
 
+        /// <summary>
+        /// Provides the Headers and/or Uri parameters required to establish an
+        /// IoT Device Gateway MQTT over WebSockets connection.
+        /// </summary>
+        /// <param name="request">Instance containing the IoT Gateway endpoint address to connect to.</param>
+        /// <param name="cancelToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <returns>
+        /// A response instance containing endpoint address specified in
+        /// <paramref name="request"/>, but with added AWSv4 Signing Parameters
+        /// in the query string, and an optional Headers dictionary containg
+        /// the same parameters as Header values.
+        /// </returns>
+        /// <seealso href="https://docs.aws.amazon.com/iot/latest/developerguide/mqtt-ws.html">MQTT over the WebSocket Protocol</seealso>
         public virtual Task<CreateMqttWebSocketUriResponse> CreateMqttWebSocketUriAsync(
             CreateMqttWebSocketUriRequest request,
             CancellationToken cancelToken = default) =>
