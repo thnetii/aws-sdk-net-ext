@@ -1,16 +1,21 @@
-﻿using System.Net;
-using System.Threading.Tasks;
-
-using Amazon.IoTDeviceGateway.Runtime.Internal.Transform;
+﻿using Amazon.IoTDeviceGateway.Runtime.Internal.Transform;
 using Amazon.Runtime;
 using Amazon.Runtime.Internal;
+
+using System;
+using System.Net;
+using System.Threading.Tasks;
 
 namespace Amazon.IoTDeviceGateway.Runtime.Internal
 {
     public class NonHttpHandler : PipelineHandler
     {
+        /// <inheritdoc/>
         public override void InvokeSync(IExecutionContext executionContext)
         {
+            if (executionContext is null)
+                throw new ArgumentNullException(nameof(executionContext));
+
             if (!(executionContext.RequestContext.Request is NonHttpRequest request))
             {
                 base.InvokeSync(executionContext);
@@ -22,6 +27,9 @@ namespace Amazon.IoTDeviceGateway.Runtime.Internal
 
         public override Task<T> InvokeAsync<T>(IExecutionContext executionContext)
         {
+            if (executionContext is null)
+                throw new ArgumentNullException(nameof(executionContext));
+
             if (!(executionContext.RequestContext.Request is NonHttpRequest request))
                 return base.InvokeAsync<T>(executionContext);
 
