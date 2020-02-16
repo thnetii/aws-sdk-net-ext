@@ -19,3 +19,19 @@ jobs:
     checkout:
     - checkout:   self
       submodules: true
+    presteps:
+    - task: DownloadSecureFile@1
+      displayName:  Download Telenor MIC login credentials
+      inputs:
+        secureFile: TelenorMicCredentials.json
+    - task: CopyFiles@2
+      displayName:  Copy Telenor MIC credentials to Unit Test source directory
+      inputs:
+        sourceFolder: $(Agent.TempDirectory)
+        contents:     TelenorMicCredentials.json
+        targetFolder: $(Build.SourcesDirectory)/test/THNETII.AWSSDK.Extensions.Test/TestParameters
+        overWrite:    true
+    - task: UseDotNet@2
+      displayName:  Use .NET Core SDK version 3.x
+      inputs:
+        version:    3.x

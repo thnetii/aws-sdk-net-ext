@@ -261,3 +261,5 @@ __pycache__/
 *.pyc
 
 [Dd]oc
+
+aws-sdk-net
