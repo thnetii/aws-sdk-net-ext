@@ -184,15 +184,22 @@ namespace Amazon.IoTDeviceGateway
         protected override AbstractAWSSigner CreateSigner() => new AWS4Signer();
 
         /// <inheritdoc />
-        protected override void CustomizeRuntimePipeline(RuntimePipeline pipeline)
+        protected sealed override void CustomizeRuntimePipeline(RuntimePipeline pipeline)
         {
+            if (pipeline is null)
+                throw new ArgumentNullException(nameof(pipeline));
+
             base.CustomizeRuntimePipeline(pipeline);
 
             var httpHandlerOpenGenericType = typeof(HttpHandler<>);
             foreach (var pipelineHandler in pipeline.EnumerateHandlers())
             {
                 bool doBreak = false;
-                for (Type handlerType = pipelineHandler.GetType(); !(handlerType is null) && handlerType != typeof(object); handlerType = GetBaseType(handlerType))
+                for (
+                    Type handlerType = pipelineHandler.GetType();
+                    !(handlerType is null) && handlerType != typeof(object);
+                    handlerType = GetBaseType(handlerType)
+                    )
                 {
                     var handlerTypeInfo = GetTypeInfo(handlerType);
                     if (handlerTypeInfo.IsGenericType && handlerTypeInfo.GetGenericTypeDefinition() == httpHandlerOpenGenericType)
@@ -243,16 +250,33 @@ namespace Amazon.IoTDeviceGateway
         #endregion
 
         #region CreateMqttWebSocketUri
-
-        public virtual Task<CreateMqttWebSocketUriResponse> CreateMqttWebSocketUriAsync(CreateMqttWebSocketUriRequest request, CancellationToken cancelToken = default)
+        private static readonly InvokeOptions CreateMqttWebSocketUriOptions = new InvokeOptions
         {
-            var marshaller = CreateMqttWebSocketUriRequestMarshaller.Instance;
-            var unmarshaller = CreateMqttWebSocketUriResponseUnmarshaller.Instance;
+            RequestMarshaller = CreateMqttWebSocketUriRequestMarshaller.Instance,
+            ResponseUnmarshaller = CreateMqttWebSocketUriResponseUnmarshaller.Instance
+        };
 
-            return InvokeAsync<CreateMqttWebSocketUriRequest, CreateMqttWebSocketUriResponse>(request, marshaller,
-                unmarshaller, cancelToken);
-        }
-
+        /// <summary>
+        /// Provides the Headers and/or Uri parameters required to establish an
+        /// IoT Device Gateway MQTT over WebSockets connection.
+        /// </summary>
+        /// <param name="request">Instance containing the IoT Gateway endpoint address to connect to.</param>
+        /// <param name="cancelToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <returns>
+        /// A response instance containing endpoint address specified in
+        /// <paramref name="request"/>, but with added AWSv4 Signing Parameters
+        /// in the query string, and an optional Headers dictionary containg
+        /// the same parameters as Header values.
+        /// </returns>
+        /// <seealso href="https://docs.aws.amazon.com/iot/latest/developerguide/mqtt-ws.html">MQTT over the WebSocket Protocol</seealso>
+        public virtual Task<CreateMqttWebSocketUriResponse> CreateMqttWebSocketUriAsync(
+            CreateMqttWebSocketUriRequest request,
+            CancellationToken cancelToken = default) =>
+            InvokeAsync<CreateMqttWebSocketUriResponse>(
+                request,
+                CreateMqttWebSocketUriOptions,
+                cancelToken
+                );
         #endregion
     }
 }

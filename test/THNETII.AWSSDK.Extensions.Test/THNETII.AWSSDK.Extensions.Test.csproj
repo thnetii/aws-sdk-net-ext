@@ -2,18 +2,15 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <LangVersion>8</LangVersion>
+    <Nullable>enable</Nullable>
     <TargetFramework>netcoreapp2.1</TargetFramework>
     <RootNamespace>Amazon</RootNamespace>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 
-  <PropertyGroup Label="Version" Condition="'$(VersionPrefix)'!=''">
-    <FileVersion>$(VersionPrefix)</FileVersion>
-    <AssemblyVersion>$(VersionPrefix)</AssemblyVersion>
-  </PropertyGroup>
-
   <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.1.1" />
     <PackageReference Include="xunit" Version="2.4.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
@@ -23,17 +20,22 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="3.1.1" />
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
-    <PackageReference Include="MQTTnet" Version="3.0.8" />
+    <PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="2.2.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
+    <PackageReference Include="MQTTnet" Version="2.8.5" />
   </ItemGroup>
 
   <ItemGroup Condition="Exists('..\..\aws-sdk-net\sdk\src')">
     <ProjectReference Include="..\..\aws-sdk-net\sdk\src\Services\CognitoIdentity\AWSSDK.CognitoIdentity.CoreCLR.csproj" />
+    <ProjectReference Include="..\..\aws-sdk-net\sdk\src\Services\CognitoIdentityProvider\AWSSDK.CognitoIdentityProvider.CoreCLR.csproj" />
+    <ProjectReference Include="..\..\aws-sdk-net\sdk\src\Services\SecurityToken\AWSSDK.SecurityToken.CoreCLR.csproj" />
   </ItemGroup>
 
   <ItemGroup Condition="!Exists('..\..\aws-sdk-net\sdk\src')">
+    <!-- Separator to support automatic dependabot merge PR -->
     <PackageReference Include="AWSSDK.CognitoIdentity" Version="3.3.101.35" />
+    <!-- Separator to support automatic dependabot merge PR -->
+    <PackageReference Include="AWSSDK.CognitoIdentityProvider" Version="3.3.101" />
   </ItemGroup>
 
   <ItemGroup>
@@ -42,6 +44,10 @@
 
   <ItemGroup>
     <EmbeddedResource Include="TestParameters\*.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="TestParameters\TelenorMicCredentials.json" />
   </ItemGroup>
 
 </Project>

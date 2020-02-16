@@ -24,6 +24,7 @@ namespace Amazon.IoTDeviceGateway
                 .Assembly.GetName().Version.ToString()
                 );
 
+        /// <inheritdoc />
         public AmazonIoTDeviceGatewayConfig() : base()
         {
             AuthenticationServiceName = ServiceName;

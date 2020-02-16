@@ -4,6 +4,8 @@ using Amazon.Runtime.Internal.Auth;
 using Amazon.Runtime.Internal.Util;
 using Amazon.Util;
 
+using System;
+
 namespace Amazon.IoTDeviceGateway.Runtime.Internal.Auth
 {
     public class MqttWebSocketAWS4Signer : AWS4PreSignedUrlSigner
@@ -12,6 +14,9 @@ namespace Amazon.IoTDeviceGateway.Runtime.Internal.Auth
 
         public override void Sign(IRequest request, IClientConfig clientConfig, RequestMetrics metrics, string awsAccessKeyId, string awsSecretAccessKey)
         {
+            if (request is null)
+                throw new ArgumentNullException(nameof(request));
+
             var hasStsTokenHeader = request.Headers.TryGetValue(HeaderKeys.XAmzSecurityTokenHeader, out string stsTokenValue);
             request.Headers.Clear();
             var signingResult = SignRequest(request, clientConfig, metrics, awsAccessKeyId, awsSecretAccessKey);
@@ -22,6 +27,9 @@ namespace Amazon.IoTDeviceGateway.Runtime.Internal.Auth
 
         public static new AWS4SigningResult SignRequest(IRequest request, IClientConfig clientConfig, RequestMetrics metrics, string awsAccessKeyId, string awsSecretAccessKey)
         {
+            if (clientConfig is null)
+                throw new ArgumentNullException(nameof(clientConfig));
+
             var service = !string.IsNullOrEmpty(clientConfig.AuthenticationServiceName)
                 ? clientConfig.AuthenticationServiceName
                 : AWSSDKUtils.DetermineService(clientConfig.DetermineServiceURL());

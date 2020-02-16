@@ -1,10 +1,7 @@
-﻿using System.Threading.Tasks;
-
-using Amazon.TestParameters;
+﻿using Amazon.TestParameters;
 
 using MQTTnet;
 using MQTTnet.Client;
-using MQTTnet.Client.Options;
 
 using Xunit;
 
@@ -15,19 +12,18 @@ namespace Amazon.IoTDeviceGateway.Test
         private static readonly MqttFactory mqttFactory = new MqttFactory();
 
         [SkippableFact]
-        public static async Task ConnectIoTDeviceGatewayWithWebSocketsMqtt()
+        public static void ConnectIoTDeviceGatewayWithWebSocketsMqtt()
         {
-            var credentials = Credentials.AWSCredentials;
+            var credentials = TelenorMicCredentials.AWSCredentials;
             Skip.If(credentials is null, "No AWS Credentials configured");
-            Skip.If(IotEndpointAddress.Region is null, "No AWS region configured");
 
             IMqttClientOptions mqttOptions;
-            using (var iotDeviceGatewayClient = new AmazonIoTDeviceGatewayClient(credentials, IotEndpointAddress.Region))
+            using (var iotDeviceGatewayClient = new AmazonIoTDeviceGatewayClient(credentials, RegionEndpoint.GetBySystemName(TelenorMicCredentials.RegionSystemName)))
             {
-                var uriDetails = await iotDeviceGatewayClient.CreateMqttWebSocketUriAsync(new Model.CreateMqttWebSocketUriRequest
+                var uriDetails = iotDeviceGatewayClient.CreateMqttWebSocketUriAsync(new Model.CreateMqttWebSocketUriRequest
                 {
-                    EndpointAddress = IotEndpointAddress.EndpointAddress
-                });
+                    EndpointAddress = TelenorMicCredentials.IotEndpoint
+                }).ConfigureAwait(false).GetAwaiter().GetResult();
 
                 mqttOptions = new MqttClientOptionsBuilder()
                     .WithTls()
@@ -39,12 +35,11 @@ namespace Amazon.IoTDeviceGateway.Test
                     webSocketOptions.RequestHeaders = uriDetails.Headers;
                 }
             }
-            using (var mqttClient = mqttFactory.CreateMqttClient())
-            {
-                var connectResult = await mqttClient.ConnectAsync(mqttOptions);
+            using var mqttClient = mqttFactory.CreateMqttClient();
+            var connectResult = mqttClient.ConnectAsync(mqttOptions)
+                .ConfigureAwait(false).GetAwaiter().GetResult();
 
-                await mqttClient.DisconnectAsync();
-            }
+            mqttClient.DisconnectAsync().ConfigureAwait(false).GetAwaiter().GetResult();
         }
     }
 }

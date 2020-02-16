@@ -1,10 +1,10 @@
-﻿using System;
-using System.Net.Http;
-
-using Amazon.IoTDeviceGateway.Runtime.Internal;
+﻿using Amazon.IoTDeviceGateway.Runtime.Internal;
 using Amazon.Runtime;
 using Amazon.Runtime.Internal;
 using Amazon.Runtime.Internal.Transform;
+
+using System;
+using System.Net.Http;
 
 namespace Amazon.IoTDeviceGateway.Model.Internal.MarshallTransformations
 {
@@ -17,9 +17,12 @@ namespace Amazon.IoTDeviceGateway.Model.Internal.MarshallTransformations
         public IRequest Marshall(AmazonWebServiceRequest input) =>
             Marshall((CreateMqttWebSocketUriRequest)input);
 
-        /// <inheritdoc />
+        /// <inheritdoc cref="IMarshaller{IRequest, CreateMqttWebSocketUriRequest}.Marshall" />
         public IRequest Marshall(CreateMqttWebSocketUriRequest input)
         {
+            if (input is null)
+                throw new ArgumentNullException(nameof(input));
+
             var request = new NonHttpRequest(input, AmazonIoTDeviceGatewayConfig.ServiceName)
             {
                 HttpMethod = HttpMethod.Get.Method,

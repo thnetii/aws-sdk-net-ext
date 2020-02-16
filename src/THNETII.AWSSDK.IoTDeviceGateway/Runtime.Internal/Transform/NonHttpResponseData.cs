@@ -1,13 +1,13 @@
-﻿using System;
+﻿using Amazon.Runtime.Internal;
+using Amazon.Runtime.Internal.Transform;
+
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-
-using Amazon.Runtime.Internal;
-using Amazon.Runtime.Internal.Transform;
 
 namespace Amazon.IoTDeviceGateway.Runtime.Internal.Transform
 {
@@ -25,7 +25,7 @@ namespace Amazon.IoTDeviceGateway.Runtime.Internal.Transform
 
         public IHttpResponseBody ResponseBody { get; set; }
 
-        public IDictionary<string, string> Headers { get; set; }
+        public IDictionary<string, string> Headers { get; }
 
         public IRequest OriginalRequest { get; set; }
 
@@ -57,7 +57,6 @@ namespace Amazon.IoTDeviceGateway.Runtime.Internal.Transform
             // Intentionally left empty
         }
 
-        /// <inheritdoc cref="IDisposable.Dispose" />
         public void Dispose()
         {
             Dispose(disposing: true);
