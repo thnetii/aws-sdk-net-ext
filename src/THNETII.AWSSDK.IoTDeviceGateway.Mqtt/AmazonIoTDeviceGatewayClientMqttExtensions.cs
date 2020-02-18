@@ -1,9 +1,11 @@
-﻿using MQTTnet.Client;
-
-using System;
+﻿using System;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
+
+using MQTTnet.Client;
+using MQTTnet.Client.Connecting;
+using MQTTnet.Client.Options;
 
 namespace Amazon.IoTDeviceGateway
 {
@@ -68,7 +70,7 @@ namespace Amazon.IoTDeviceGateway
         /// <param name="iotEndpointAddress">The AWS account-specific AWS IoT endpoint address.</param>
         /// <param name="mqttClient">An MQTT.NET client instance to connect.</param>
         /// <param name="cancelToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        public static async Task<MqttClientConnectResult> ConnectMqttWebSocketsClientAsync(this AmazonIoTDeviceGatewayClient client,
+        public static async Task<MqttClientAuthenticateResult> ConnectMqttWebSocketsClientAsync(this AmazonIoTDeviceGatewayClient client,
             string iotEndpointAddress, IMqttClient mqttClient, CancellationToken cancelToken = default)
         {
             if (mqttClient is null)
