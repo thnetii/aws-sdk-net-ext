@@ -25,7 +25,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{B5E9EA97-E
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "THNETII.AWSSDK.Extensions.Test", "test\THNETII.AWSSDK.Extensions.Test\THNETII.AWSSDK.Extensions.Test.csproj", "{9509F718-9DAF-44AF-AB05-7B7B107E8A6C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "THNETII.AWSSDK.Extensions.NETCore.Hosting", "src\THNETII.AWSSDK.Extensions.NETCore.Hosting\THNETII.AWSSDK.Extensions.NETCore.Hosting.csproj", "{A115E5C9-886D-40DB-BA44-24FC2473803E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "THNETII.AWSSDK.Extensions.NETCore.Hosting", "src\THNETII.AWSSDK.Extensions.NETCore.Hosting\THNETII.AWSSDK.Extensions.NETCore.Hosting.csproj", "{A115E5C9-886D-40DB-BA44-24FC2473803E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

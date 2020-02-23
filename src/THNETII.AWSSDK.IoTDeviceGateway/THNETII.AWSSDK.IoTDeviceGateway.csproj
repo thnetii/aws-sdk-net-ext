@@ -8,11 +8,7 @@
     <RootNamespace>Amazon.IoTDeviceGateway</RootNamespace>
   </PropertyGroup>
 
-  <ItemGroup Condition="'$(SolutionDir)'=='' and Exists('..\..\aws-sdk-net\sdk\src')">
-    <ProjectReference Include="..\..\aws-sdk-net\sdk\src\Core\AWSSDK.Core.CoreCLR.csproj" />
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(SolutionDir)'!='' or !Exists('..\..\aws-sdk-net\sdk\src')">
+  <ItemGroup>
     <PackageReference Include="AWSSDK.Core" Version="3.3.104.26" />
   </ItemGroup>
 
