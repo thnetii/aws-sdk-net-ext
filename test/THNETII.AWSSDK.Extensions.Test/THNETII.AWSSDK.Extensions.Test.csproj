@@ -4,7 +4,7 @@
   <PropertyGroup>
     <LangVersion>8</LangVersion>
     <Nullable>enable</Nullable>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
     <RootNamespace>Amazon</RootNamespace>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
@@ -25,17 +25,10 @@
     <PackageReference Include="MQTTnet" Version="3.0.8" />
   </ItemGroup>
 
-  <ItemGroup Condition="Exists('..\..\aws-sdk-net\sdk\src')">
-    <ProjectReference Include="..\..\aws-sdk-net\sdk\src\Services\CognitoIdentity\AWSSDK.CognitoIdentity.CoreCLR.csproj" />
-    <ProjectReference Include="..\..\aws-sdk-net\sdk\src\Services\CognitoIdentityProvider\AWSSDK.CognitoIdentityProvider.CoreCLR.csproj" />
-    <ProjectReference Include="..\..\aws-sdk-net\sdk\src\Services\SecurityToken\AWSSDK.SecurityToken.CoreCLR.csproj" />
-  </ItemGroup>
-
-  <ItemGroup Condition="!Exists('..\..\aws-sdk-net\sdk\src')">
-    <!-- Separator to support automatic dependabot merge PR -->
+  <ItemGroup>
     <PackageReference Include="AWSSDK.CognitoIdentity" Version="3.3.101.37" />
-    <!-- Separator to support automatic dependabot merge PR -->
     <PackageReference Include="AWSSDK.CognitoIdentityProvider" Version="3.3.108.3" />
+    <PackageReference Include="AWSSDK.Extensions.NETCore.Setup" Version="3.3.100.1" />
   </ItemGroup>
 
   <ItemGroup>
