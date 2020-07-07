@@ -1,4 +1,4 @@
-﻿using Amazon.Runtime.Internal;
+using Amazon.Runtime.Internal;
 using Amazon.Runtime.Internal.Transform;
 
 using System;

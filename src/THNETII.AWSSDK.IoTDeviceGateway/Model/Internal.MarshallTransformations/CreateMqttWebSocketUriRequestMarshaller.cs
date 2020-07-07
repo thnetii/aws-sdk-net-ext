@@ -1,4 +1,4 @@
-﻿using Amazon.IoTDeviceGateway.Runtime.Internal;
+using Amazon.IoTDeviceGateway.Runtime.Internal;
 using Amazon.Runtime;
 using Amazon.Runtime.Internal;
 using Amazon.Runtime.Internal.Transform;

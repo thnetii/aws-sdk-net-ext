@@ -1,4 +1,4 @@
-﻿using Amazon.Runtime;
+using Amazon.Runtime;
 
 namespace Amazon.IoTDeviceGateway.Model
 {

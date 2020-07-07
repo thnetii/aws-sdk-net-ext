@@ -1,4 +1,4 @@
-﻿using Amazon.IoTDeviceGateway.Runtime.Internal.Auth;
+using Amazon.IoTDeviceGateway.Runtime.Internal.Auth;
 using Amazon.Runtime.Internal.Auth;
 
 namespace Amazon.IoTDeviceGateway.Model

@@ -1,4 +1,4 @@
-﻿using Amazon.TestParameters;
+using Amazon.TestParameters;
 
 using MQTTnet;
 using MQTTnet.Client;
