@@ -1,4 +1,4 @@
-﻿using Amazon.CognitoIdentity;
+using Amazon.CognitoIdentity;
 using Amazon.CognitoIdentityProvider;
 using Amazon.Runtime;
 

@@ -1,4 +1,4 @@
-﻿using Amazon.Runtime;
+using Amazon.Runtime;
 using Amazon.Util.Internal;
 #if NETSTANDARD1_3
 using System.Reflection;
