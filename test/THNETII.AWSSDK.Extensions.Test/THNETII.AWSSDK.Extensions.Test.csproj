@@ -2,9 +2,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <LangVersion>8</LangVersion>
-    <Nullable>enable</Nullable>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
     <RootNamespace>Amazon</RootNamespace>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
