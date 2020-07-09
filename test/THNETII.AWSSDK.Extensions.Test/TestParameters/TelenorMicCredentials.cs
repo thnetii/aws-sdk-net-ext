@@ -2,6 +2,7 @@ using Amazon.CognitoIdentity;
 using Amazon.CognitoIdentityProvider;
 using Amazon.Runtime;
 
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.FileProviders;
 
 using Newtonsoft.Json;
@@ -17,24 +18,22 @@ namespace Amazon.TestParameters
     {
         private const string manifestServiceUri = "https://1u31fuekv5.execute-api.eu-west-1.amazonaws.com/prod/manifest/";
 
-        private static readonly IFileProvider fileProvider =
-            new EmbeddedFileProvider(typeof(TelenorMicCredentials).Assembly, typeof(TelenorMicCredentials).Namespace);
-
-        private static readonly Lazy<MicTestParameters?> LazyEmbeddedTestParameters =
-            new Lazy<MicTestParameters?>(() =>
+        private static readonly Lazy<MicTestParameters> LazyTestParameters =
+            new Lazy<MicTestParameters>(() =>
             {
-                var file = fileProvider.GetFileInfo($"{nameof(TelenorMicCredentials)}.json");
-                if (!file.Exists)
-                    return null;
-                using var fileStream = file.CreateReadStream();
-                using var textReader = new StreamReader(fileStream, Encoding.UTF8);
-                using var jsonReader = new JsonTextReader(textReader);
-                return JsonSerializer.CreateDefault().Deserialize<MicTestParameters?>(jsonReader);
+                var config = new ConfigurationBuilder()
+                    .AddUserSecrets(typeof(TelenorMicCredentials).Assembly, optional: true)
+                    .Build();
+
+                var sectionName = ConfigurationPath.Combine("TelenorMic", "Credentials");
+                var parameters = new MicTestParameters();
+                config.Bind(sectionName, parameters);
+                return parameters;
             });
         private static readonly Lazy<(MicMetadataManifest? metadata, AWSCredentials? credentials)> LazyMetadataAndCredentials =
             new Lazy<(MicMetadataManifest? metadata, AWSCredentials? credentials)>(() =>
             {
-                var parameters = EmbeddedTestParameters;
+                var parameters = TestParameters;
                 if (parameters is null)
                     return default;
 
@@ -84,7 +83,7 @@ namespace Amazon.TestParameters
                     using var reader = new JsonTextReader(new StreamReader(stream, Encoding.UTF8));
                     return JsonSerializer.CreateDefault().Deserialize<Login?>(reader);
                 }
-                Login? login = GetLogin(httpClient, apiGatewayStackUrl, metadataManifest.ApiKey, parameters.UserName, parameters.Password);
+                Login? login = GetLogin(httpClient, apiGatewayStackUrl, metadataManifest.ApiKey, parameters.Username, parameters.Password);
                 if (!(login?.credentials is Credentials credentials))
                     return default;
 
@@ -103,8 +102,8 @@ namespace Amazon.TestParameters
                 return (metadataManifest, cognito);
             });
 
-        internal static MicTestParameters? EmbeddedTestParameters =>
-            LazyEmbeddedTestParameters.Value;
+        internal static MicTestParameters TestParameters =>
+            LazyTestParameters.Value;
 
         public static AWSCredentials? AWSCredentials =>
             LazyMetadataAndCredentials.Value.credentials;
