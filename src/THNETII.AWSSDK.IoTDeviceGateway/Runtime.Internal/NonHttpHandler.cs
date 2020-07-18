@@ -3,6 +3,7 @@ using Amazon.Runtime;
 using Amazon.Runtime.Internal;
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -25,6 +26,7 @@ namespace Amazon.IoTDeviceGateway.Runtime.Internal
             HandleRequest(executionContext, request);
         }
 
+        [return: MaybeNull]
         public override Task<T> InvokeAsync<T>(IExecutionContext executionContext)
         {
             if (executionContext is null)
@@ -34,10 +36,10 @@ namespace Amazon.IoTDeviceGateway.Runtime.Internal
                 return base.InvokeAsync<T>(executionContext);
 
             HandleRequest(executionContext, request);
-            return Task.FromResult<T>(null);
+            return Task.FromResult<T>(null!);
         }
 
-        private void HandleRequest(IExecutionContext executionContext, NonHttpRequest request)
+        private static void HandleRequest(IExecutionContext executionContext, NonHttpRequest request)
         {
             executionContext.ResponseContext.HttpResponse = new NonHttpResponseData
             {

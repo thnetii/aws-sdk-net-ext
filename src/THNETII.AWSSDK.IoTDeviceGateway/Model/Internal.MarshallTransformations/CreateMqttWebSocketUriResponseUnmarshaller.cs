@@ -1,17 +1,20 @@
+using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using System.Net;
+
 using Amazon.IoTDeviceGateway.Runtime.Internal.Transform;
 using Amazon.Runtime;
 using Amazon.Runtime.Internal.Auth;
 using Amazon.Runtime.Internal.Transform;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
 
 namespace Amazon.IoTDeviceGateway.Model.Internal.MarshallTransformations
 {
     public class CreateMqttWebSocketUriResponseUnmarshaller : NonHttpResponseUnmarshaller
     {
         private static readonly char[] signedHeadersSeparator = new[] { ';' };
+
 
         /// <summary>
         /// Given the original request and the AWSv4 Signing Result,
@@ -27,13 +30,14 @@ namespace Amazon.IoTDeviceGateway.Model.Internal.MarshallTransformations
         /// from the <see cref="NonHttpResponseData.OriginalRequest"/> contained
         /// in <paramref name="input"/>.
         /// </returns>
+        [SuppressMessage("Globalization", "CA1303: Do not pass literals as localized parameters")]
         public override AmazonWebServiceResponse Unmarshall(NonHttpUnmarshallerContext input)
         {
             var request = input?.ResponseData?.OriginalRequest;
             if (request is null)
-                return null;
+                throw new InvalidOperationException("Unable to unmarshal non-HTTP Amazon Service Response: The original request is null.");
 
-            IDictionary<string, string> headers = null;
+            IDictionary<string, string>? headers = null;
             var signerResult = request.AWS4SignerResult;
             if (!(signerResult is null))
             {

@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project>
   <Import Condition="Exists('$(MSBuildThisFileDirectory)\Directory.Meta.props')" Project="$(MSBuildThisFileDirectory)\Directory.Meta.props" />
+  <PropertyGroup Label="Nullable Reference Types">
+    <LangVersion>8</LangVersion>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)'=='Debug'">
     <DebugType>portable</DebugType>
   </PropertyGroup>
@@ -47,5 +51,8 @@
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0">
       <PrivateAssets>All</PrivateAssets>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup Label="Nullable helper library for Pre-.NET Standard 2.1">
+    <PackageReference Include="Nullable" Version="1.2.1" PrivateAssets="All" />
   </ItemGroup>
 </Project>

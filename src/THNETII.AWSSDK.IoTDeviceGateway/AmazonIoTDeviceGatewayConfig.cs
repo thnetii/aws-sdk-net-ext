@@ -31,7 +31,7 @@ namespace Amazon.IoTDeviceGateway
         }
 
         /// <inheritdoc />
-        public override string ServiceVersion => null;
+        public override string? ServiceVersion => null;
 
         /// <inheritdoc />
         public override string UserAgent => UserAgentString;

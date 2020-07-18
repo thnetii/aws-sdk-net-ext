@@ -34,7 +34,7 @@ namespace Amazon.IoTDeviceGateway
 
             var optionsBuilder = new MqttClientOptionsBuilder();
             optionsBuilder = optionsBuilder.WithTls();
-            optionsBuilder = optionsBuilder.WithWebSocketServer(uriDetails.RequestUri.ToString());
+            optionsBuilder = optionsBuilder.WithWebSocketServer(uriDetails.RequestUri?.ToString());
 
             IWebProxy iProxy = client.Config.GetWebProxy();
             if (!(iProxy is null))

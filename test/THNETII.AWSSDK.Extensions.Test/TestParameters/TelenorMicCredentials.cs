@@ -52,7 +52,7 @@ namespace Amazon.TestParameters
                 MicManifest? manifest = GetMicManifest(httpClient, parameters.Hostname);
                 if (manifest is null)
                     return default;
-                string apiGatewayStackUrl = FormattableString.Invariant($"{manifest.ApiGatewayRootUrl}/{Uri.EscapeDataString(manifest.StackName)}");
+                string apiGatewayStackUrl = FormattableString.Invariant($"{manifest.ApiGatewayRootUrl}/{Uri.EscapeDataString(manifest.StackName!)}");
 
                 static MicMetadataManifest? GetMicMetadataManifest(HttpClient httpClient, string apiGatewayStackUrl)
                 {

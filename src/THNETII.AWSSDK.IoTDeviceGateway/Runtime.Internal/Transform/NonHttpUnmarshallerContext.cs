@@ -12,7 +12,7 @@ namespace Amazon.IoTDeviceGateway.Runtime.Internal.Transform
 
         public new NonHttpResponseData ResponseData { get; }
 
-        public override string CurrentPath => default;
+        public override string? CurrentPath => default;
 
         public override int CurrentDepth => default;
 
@@ -24,6 +24,6 @@ namespace Amazon.IoTDeviceGateway.Runtime.Internal.Transform
 
         public override bool Read() => default;
 
-        public override string ReadText() => default;
+        public override string? ReadText() => default;
     }
 }

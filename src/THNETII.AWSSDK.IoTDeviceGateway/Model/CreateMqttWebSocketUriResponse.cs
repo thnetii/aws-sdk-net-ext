@@ -12,7 +12,7 @@ namespace Amazon.IoTDeviceGateway.Model
     /// </summary>
     public class CreateMqttWebSocketUriResponse : AmazonWebServiceResponse
     {
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public CreateMqttWebSocketUriResponse() : base() { }
 
         internal CreateMqttWebSocketUriResponse(
@@ -25,13 +25,13 @@ namespace Amazon.IoTDeviceGateway.Model
         /// AWS Signature Version 4 Signing Information added in the query
         /// parameters.
         /// </summary>
-        public Uri RequestUri { get; set; }
+        public Uri? RequestUri { get; set; }
 
         /// <summary>
         /// AWS Signature Version 4 Headers that can be used with the original
         /// endpoint address instead of <see cref="RequestUri"/> for clients
         /// that have maximum-URL-length restrictions.
         /// </summary>
-        public IDictionary<string, string> Headers { get; }
+        public IDictionary<string, string>? Headers { get; }
     }
 }

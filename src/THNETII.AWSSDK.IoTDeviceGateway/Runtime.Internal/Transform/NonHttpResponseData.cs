@@ -17,7 +17,7 @@ namespace Amazon.IoTDeviceGateway.Runtime.Internal.Transform
 
         public long ContentLength => 0L;
 
-        public string ContentType => default;
+        public string? ContentType => default;
 
         public HttpStatusCode StatusCode { get; set; }
 
@@ -25,9 +25,9 @@ namespace Amazon.IoTDeviceGateway.Runtime.Internal.Transform
 
         public IHttpResponseBody ResponseBody { get; set; }
 
-        public IDictionary<string, string> Headers { get; }
+        public IDictionary<string, string>? Headers { get; }
 
-        public IRequest OriginalRequest { get; set; }
+        public IRequest? OriginalRequest { get; set; }
 
         public string[] GetHeaderNames()
         {
@@ -36,9 +36,9 @@ namespace Amazon.IoTDeviceGateway.Runtime.Internal.Transform
                 : Headers.Keys.ToArray();
         }
 
-        public string GetHeaderValue(string headerName)
+        public string? GetHeaderValue(string headerName)
         {
-            string headerValue = null;
+            string? headerValue = null;
             Headers?.TryGetValue(headerName, out headerValue);
             return headerValue;
         }

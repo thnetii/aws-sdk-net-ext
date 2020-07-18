@@ -27,7 +27,7 @@ namespace Amazon.IoTDeviceGateway.Test
 
                 mqttOptions = new MqttClientOptionsBuilder()
                     .WithTls()
-                    .WithWebSocketServer(uriDetails.RequestUri.ToString())
+                    .WithWebSocketServer(uriDetails.RequestUri?.ToString())
                     .Build();
 
                 if (mqttOptions.ChannelOptions is MqttClientWebSocketOptions webSocketOptions)

@@ -1,3 +1,5 @@
+using System;
+
 using Amazon.IoTDeviceGateway.Runtime.Internal.Auth;
 using Amazon.Runtime.Internal.Auth;
 
@@ -18,6 +20,6 @@ namespace Amazon.IoTDeviceGateway.Model
         /// Your AWS account-specific AWS IoT endpoint. You can use the AWS IoT CLI <a href="https://docs.aws.amazon.com/cli/latest/reference/iot/describe-endpoint.html">describe-endpoint</a> command to find this endpoint.
         /// </summary>
         /// <seealso href="https://docs.aws.amazon.com/iot/latest/developerguide/mqtt-ws.html">MQTT over the WebSocket Protocol</seealso>
-        public string EndpointAddress { get; set; }
+        public string? EndpointAddress { get; set; }
     }
 }
