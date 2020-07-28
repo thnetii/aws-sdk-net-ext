@@ -25,7 +25,7 @@ jobs:
     - script: |
         dotnet user-secrets set -p test/THNETII.AWSSDK.Extensions.Test "TelenorMic:Credentials:Hostname" "$(TelenorMic.Credentials.Hostname)"
         dotnet user-secrets set -p test/THNETII.AWSSDK.Extensions.Test "TelenorMic:Credentials:Username" "$(TelenorMic.Credentials.Username)"
-        dotnet user-secrets set -p test/THNETII.AWSSDK.Extensions.Test "TelenorMic:Credentials:Username" "$(TelenorMic.Credentials.Username)"
+        dotnet user-secrets set -p test/THNETII.AWSSDK.Extensions.Test "TelenorMic:Credentials:Password" "$(TelenorMic.Credentials.Password)"
       displayName: dotnet user-secrets set -p test/THNETII.AWSSDK.Extensions.Test
     poststeps:
     - script: |
