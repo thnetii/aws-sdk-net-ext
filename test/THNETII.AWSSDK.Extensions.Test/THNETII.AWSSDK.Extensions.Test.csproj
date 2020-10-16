@@ -33,7 +33,7 @@
 
   <ItemGroup Condition="!Exists('..\..\aws-sdk-net\sdk\src')">
     <!-- Separator to support automatic dependabot merge PR -->
-    <PackageReference Include="AWSSDK.CognitoIdentity" Version="3.3.101.124" />
+    <PackageReference Include="AWSSDK.CognitoIdentity" Version="3.5.0.27" />
     <!-- Separator to support automatic dependabot merge PR -->
     <PackageReference Include="AWSSDK.CognitoIdentityProvider" Version="3.3.113" />
   </ItemGroup>
